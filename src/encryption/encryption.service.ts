@@ -127,6 +127,11 @@ export class EncryptionService {
       WALLET_ENCRYPTION_KEY_PREVIOUS_ENV,
     );
     if (previousKey && previousKey.trim() !== '') {
+      if (PLACEHOLDER_ENCRYPTION_KEYS.includes(previousKey.trim())) {
+        throw new Error(
+          `${WALLET_ENCRYPTION_KEY_PREVIOUS_ENV} cannot use the documented placeholder value`,
+        );
+      }
       if (previousKey.trim().length < MIN_ENCRYPTION_KEY_LENGTH) {
         throw new Error(
           `${WALLET_ENCRYPTION_KEY_PREVIOUS_ENV} must be at least ${MIN_ENCRYPTION_KEY_LENGTH} characters long`,
